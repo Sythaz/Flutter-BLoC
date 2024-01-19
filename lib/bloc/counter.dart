@@ -8,16 +8,12 @@ class CounterCubit extends Cubit<int> {
   int initialData;
   int? current;
   int? next;
-
-  void tambahData() {
-    //Emit mirip seperti return namun bukan berarti sama, emit berguna untuk memberi tahu DAN mengubah suatu value
-    emit(state + 1);
-  }
-
-  void kurangData() {
-    //Emit mirip seperti return namun bukan berarti sama, emit berguna untuk memberi tahu DAN mengubah suatu value
-    emit(state - 1);
-  }
+  
+  //Emit mirip seperti return namun bukan berarti sama, emit berguna untuk memberi tahu DAN mengubah suatu value
+  void tambahData() => emit(state + 1);
+  
+  //Emit mirip seperti return namun bukan berarti sama, emit berguna untuk memberi tahu DAN mengubah suatu value
+  void kurangData() => emit(state - 1);
 
   //Pelaporan atau notifier terhadap perubahan pada suatu data (change)
   @override
