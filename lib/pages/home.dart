@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_bloc/bloc/counter.dart';
+import 'package:udemy_bloc/pages/data_widget.dart';
 
 class HomePage extends StatelessWidget {
   //Untuk menggunakan data dari class CounterCubit, diharapkan membuat shorcut pemanggilan class CounterCubit terlebih dahulu
-  CounterCubit mycounter = CounterCubit();
+  //Karena menggunakan blocProvider, sekarang tidak memerlukan inisialisasi objek lagi
+  // CounterCubit mycounter = CounterCubit();
+
+  //Penyederhanaan BlocProvider.of<CounterCubit>(context) bisa dengan cara seperti inisialisasi diatas
+  // CounterCubit mycounter = BlocProvider.of<CounterCubit>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,9 @@ class HomePage extends StatelessWidget {
                     child: InkWell(
                         borderRadius: BorderRadius.circular(20),
                         onTap: () {
-                          mycounter.kurangData();
+                          // mycounter.kurangData();
+                          // Dengan menggunakan BlocProvider kini melakukan fungsi dalam CounterCubit menjadi seperti ini, namun bisa disederhanakan dengan cara menyingkat BlocProvider.of menjadi variabel
+                          BlocProvider.of<CounterCubit>(context).kurangData();
                         },
                         child: SizedBox(
                           height: 80,
@@ -34,55 +41,10 @@ class HomePage extends StatelessWidget {
                           ),
                         )),
                   ),
-
-                  //BlocConsumer adalah gabungan antara blocListener dengan blocBuilder yang terdapat bloc: sebagai target pengawasan terhadap perubahan, buildWhen:, builder:, listener:, dan listenWhen:
-                  BlocConsumer<CounterCubit, int>(
-                    bloc: mycounter,
-                    //blocBuilder memiliki buildWhen yang berguna untuk menentukan kapan builder me-rebuild UI dengan if return true dan false, previous dan current seperti namanya adalah sebuah data lama dan data saat ini
-                    buildWhen: (previous, current) {
-                      if (previous == 1) {
-                        return false;
-                      } else
-                        return true;
-                    },
-                    //blocBuilder memiliki state, berbeda dengan streamBuilder yang memiliki snapshot yang memiliki informasi status dan data. blocBuilder state hanya memiliki informasi data saja
-                    builder: (context, state) {
-                      return Material(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.red,
-                          child: SizedBox(
-                            width: 160,
-                            height: 80,
-                            child: Center(
-                              child: Text(
-                                "$state",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 45),
-                              ),
-                            ),
-                          ));
-                    },
-                    //Function utama blocListener, bagian untuk menampilkan kebutuhan seperti dialog atau snackBar
-                    listener: (context, state) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          duration: Duration(milliseconds: 200),
-                          content: Text("Genap!"),
-                        ),
-                      );
-                    },
-                    //Function utama blocListener, bagian untuk menampilkan kebutuhan seperti dialog atau snackBar
-                    listenWhen: (previous, current) {
-                      if (current % 2 == 0) {
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    },
-                  ),
-
+                  //Refactor widget blocConsumer agar lebih terlihat bersih dan memindahkan code class dataWidget ke file berbeda
+                  // DataWidget(mycounter: mycounter),
+                  //Kini tak perlu constructor mycounter, karena telah diwakilkan BlocProvider di main.dart
+                  DataWidget(),
                   Material(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.blue,
@@ -97,7 +59,9 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        mycounter.tambahData();
+                        // mycounter.tambahData();
+                        // Dengan menggunakan BlocProvider kini melakukan fungsi dalam CounterCubit menjadi seperti ini, namun bisa disederhanakan dengan cara menyingkat BlocProvider.of menjadi variabel
+                        BlocProvider.of<CounterCubit>(context).tambahData();
                       },
                     ),
                   )
