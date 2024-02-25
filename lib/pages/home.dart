@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_bloc/bloc/counter.dart';
 import 'package:udemy_bloc/pages/data_widget.dart';
 
+import 'data_other_page.dart';
+
 class HomePage extends StatelessWidget {
   //Untuk menggunakan data dari class CounterCubit, diharapkan membuat shorcut pemanggilan class CounterCubit terlebih dahulu
   //Karena menggunakan blocProvider, sekarang tidak memerlukan inisialisasi objek lagi
@@ -13,8 +15,31 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CounterCubit myCounter = context.read<CounterCubit>();
     return Scaffold(
         appBar: AppBar(),
+        // FAB dibuat untuk peralihan page home ke page DataOtherPage
+        floatingActionButton: FloatingActionButton(
+          // Beri sebuah icon didalam button FAB
+          child: Icon(Icons.navigate_next),
+          onPressed: () {
+            // Pada saat button FAB di klik akan berpindah page dengan navigator
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  //Pada saat mengirimkan data ke page lain, jangan gunakan BlocProvider dan lebih baik gunakan BlocProvider.value karena create pada BlocProvider digunakan saat baru membuat data yang ingin dipantau serta bisa berdampak error!
+                  // return BlocProvider(
+                  //   create: (context) => myCounter,
+                  //   child: DataOtherPage(),
+                  return BlocProvider.value(
+                    value: myCounter,
+                    child: DataOtherPage(),
+                  );
+                },
+              ),
+            );
+          },
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
