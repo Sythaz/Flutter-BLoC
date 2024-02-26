@@ -24,20 +24,7 @@ class HomePage extends StatelessWidget {
           child: Icon(Icons.navigate_next),
           onPressed: () {
             // Pada saat button FAB di klik akan berpindah page dengan navigator
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  //Pada saat mengirimkan data ke page lain, jangan gunakan BlocProvider dan lebih baik gunakan BlocProvider.value karena create pada BlocProvider digunakan saat baru membuat data yang ingin dipantau serta bisa berdampak error!
-                  // return BlocProvider(
-                  //   create: (context) => myCounter,
-                  //   child: DataOtherPage(),
-                  return BlocProvider.value(
-                    value: myCounter,
-                    child: DataOtherPage(),
-                  );
-                },
-              ),
-            );
+            Navigator.of(context).pushNamed('/otherPage');
           },
         ),
         body: Center(
