@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_bloc/bloc/counter.dart';
 import 'package:udemy_bloc/pages/data_widget.dart';
 
-import 'data_other_page.dart';
-
 class HomePage extends StatelessWidget {
   //Untuk menggunakan data dari class CounterCubit, diharapkan membuat shorcut pemanggilan class CounterCubit terlebih dahulu
   //Karena menggunakan blocProvider, sekarang tidak memerlukan inisialisasi objek lagi
@@ -15,7 +13,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CounterCubit myCounter = context.read<CounterCubit>();
     return Scaffold(
         appBar: AppBar(),
         // FAB dibuat untuk peralihan page home ke page DataOtherPage
