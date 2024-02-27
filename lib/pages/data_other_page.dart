@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_bloc/bloc/counter.dart';
+import 'package:udemy_bloc/bloc/theme.dart';
 
 class DataOtherPage extends StatelessWidget {
   const DataOtherPage({super.key});
@@ -8,9 +9,15 @@ class DataOtherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CounterCubit myCounter = context.read<CounterCubit>(); //Instansiasi
+    ThemeCubit myTheme = context.read<ThemeCubit>();
 
     return Scaffold(
-      // appBar: AppBar(),
+      //Karena tombol FAB sudah digunakan di page home, kita buat tombol FAB di otherPage
+      floatingActionButton: FloatingActionButton(
+        // OnPressed didahului dengan () => sebagai tanda pemanggilan method(?) untuk merubah value boolean state dari ThemeCubit
+        onPressed: () => myTheme.changeTheme(),
+        child: Icon(Icons.sunny),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
