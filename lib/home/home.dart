@@ -57,7 +57,11 @@ class HomePage extends StatelessWidget {
                   title: Text("Nama User: ${user.name}"),
                   subtitle: Text("Umur User: ${user.age}"),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //Add disini bekerja pengirim, UserBloc mengirimkan event yang berisi array allUsers sekarang dengan index
+                      //
+                      userB.add(DeleteUserEvent(user));
+                    },
                     icon: Icon(Icons.delete),
                   ),
                 );

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_bloc/bloc/user_bloc.dart';
+import 'package:udemy_bloc/general_obersever.dart';
 import 'package:udemy_bloc/home/home.dart';
 
 void main(List<String> args) {
+  Bloc.observer = MyObserver();
   runApp(
     MyApp(),
   );
